@@ -1,0 +1,15 @@
+<a href="/restaurants/{{ object.pk }}" class="link-dark card-link">
+<div class="card h-100">
+    <img src="{{ object.image.url }}" class="card-img-top vertical-card-image">
+    <div class="card-body">
+        <h3 class="card-title">{{ object.name }}</h3>
+        <div class="text-muted small mb-1">
+            <span>{{ object.category.name }}</span>
+        </div>
+        <p class="card-text">
+            <span class="star-rating me-1" data-rate="{{ object.average_rating|floatformat:1 }}"></span>
+            {{ object.average_rating|floatformat:1 }}（{{ object.review_count }}件）
+        </p>
+    </div>
+</div>
+</a>

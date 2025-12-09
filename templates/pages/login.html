@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+
+{% block title %}
+{{ TITLE }} | ログイン
+{% endblock %}
+
+{% block main %}
+
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 justify-content-center">
+            <h2 class="mb-4">ログイン</h2>
+
+            <hr class="my-4">
+
+            <form method="post">
+                {% csrf_token %} 
+                
+                <div class="form-group mb-3">                                        
+                    <input type="email" class="form-control" id="email" name="email" value="" required autocomplete="email" placeholder="メールアドレス" autofocus>                    
+                </div>    
+                                
+                <div class="form-group mb-3">                    
+                    <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="パスワード">                    
+                </div>
+
+                <!-- 後日実装予定 -->
+<!--             
+                <p class="mt-3 text-center" style="color: dodgerblue;">
+                    <a href="/">パスワードをお忘れですか？</a>
+                </p>
+ -->
+                <hr class="my-4">
+
+                <div class="form-group d-flex justify-content-center mb-4">
+                    <button type="submit" class="btn shadow-sm w-50" style="background-color: #A9894B;color: #fff;font-weight: bold;">ログイン</button>
+                </div>
+            </form>
+
+            <p class="mt-4 text-center">
+                アカウントをお持ちでない場合<br>
+                <a href="/signup/" style="color: dodgerblue;">アカウントを作成</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'restaurants_list' %}">店舗一覧</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
+                </ol>
+</nav>
+<div class="container pb-5">  
+
+        <h1 class="mt-5 mb-2 text-center">{{ shop.name }}</h1>
+        <p class="text-center mb-2">
+            <span class="star-rating" data-rate="{{ average_rating|floatformat:1 }}"></span>
+            {{ average_rating|floatformat:1 }}（{{ review_count }}件）
+        </p>
+    <div class="row justify-content-center">
+        <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-10">
+
+                <div class="p-3 mb-4 row g-2 align-items-center">
+                    <!-- 予約ボタン -->
+                    <div class="col-10">
+                        <a href="{% url 'reserve' pk=shop.pk %}" class="btn shadow-sm w-100" style="width: 70%; background-color: #A9894B;color: #fff;">
+                            今すぐ予約する
+                        </a>
+                    </div>
+
+                    <!-- お気に入りアイコン -->                    
+                    <div class="col-2 text-center">
+                        {% if favorites == 0 %}
+                        <form action="{% url 'favorites_toggle01' pk=shop.pk %}" method="post" class="d-flex justify-content-center">
+                            <input type="hidden" name="_token" value="tjB5W1PEOhN7XNpbP52F7OIXJsWGo2woB3SLVgaz">
+                                {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger rounded-circle shadow-sm" title="お気に入り登録" style="width: 50px; height: 50px; padding: 0; min-width: 50px;">
+                                <span style="font-size: 1.5rem;">♥</span>
+                            </button>
+                        </form>
+                        {% else %}                      
+                        <form action="{% url 'favorites_toggle01' pk=shop.pk %}" method="post" class="d-flex justify-content-center">
+                            <input type="hidden" name="_token" value="tjB5W1PEOhN7XNpbP52F7OIXJsWGo2woB3SLVgaz">
+                                {% csrf_token %}
+                            <button type="submit" class="btn btn-danger rounded-circle shadow-sm" title="お気に入り解除" style="width: 50px; height: 50px; padding: 0; min-width: 50px;">
+                                <span style="font-size: 1.5rem;">♥</span>
+                            </button>                            
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <img src="{{ shop.image.url }}" class="w-100">
+                </div>
+
+                <div class="p-3 mb-4">
+                    <p>{{ shop.description|linebreaksbr }}</p>
+                </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link bg-light active" href="{% url 'restaurants_detail' pk=shop.pk %}">店舗情報</a>
+        </li>
+        <li class="nav-item " role="presentation">
+            <a class="nav-link border" href="{% url 'reviews' pk=shop.pk %}">レビュー</a>
+        </li>
+    </ul>
+
+    <div class="tab-content border border-top-0 p-4 mb-4" id="detailTabsContent">
+
+        <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+            <div class="" style="width: 90%; margin: 10px auto;">
+                <div class="flex mb-4">
+                    <span class="item_bgbr  me-2">#{{shop.category}}</span>
+                    
+                    {% for tag in shop.tags.all %}
+                    <span class="item_bgbr  me-2">#{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+                <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-md-2 col-sm-4 my-1">
+                        <span class="fw-bold" style="font-weight: bold;color: #4c3725;">住所</span>
+                    </div>
+                    <div class="col">
+                        <span>{{ shop.address }}</span>
+                    </div>
+                </div>
+
+                
+                <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-md-2 col-sm-4 my-1">
+                        <span class="fw-bold" style="font-weight: bold;color: #4c3725;">電話番号</span>
+                    </div>
+                    <div class="col">
+                        <a href="tel:{{ shop.tel }}" class="text-primary">{{ shop.tel }}</a>
+                    </div>
+                </div>
+                
+                <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-md-2 col-sm-4 my-1">
+                        <span class="fw-bold" style="font-weight: bold;color: #4c3725;">営業時間</span>
+                    </div>
+                    <div class="col">
+                        <span>{{ shop.opening_hours|linebreaksbr }}</span>
+                    </div>
+                </div>
+
+                <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-md-2 col-sm-4 my-1">
+                        <span class="fw-bold" style="font-weight: bold;color: #4c3725;">定休日</span>
+                    </div>
+                    <div class="col d-flex">
+                        <div>
+                            {{ shop.holiday|linebreaksbr }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-md-2 col-sm-4 my-1">
+                        <span class="fw-bold" style="font-weight: bold;color: #4c3725;">座席数</span>
+                    </div>
+                    <div class="col">
+                        <span>{{ shop.seating_capacity|linebreaksbr }}</span>
+                    </div>
+                </div>
+
+                <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-md-2 col-sm-4 my-1">
+                        <span class="fw-bold" style="font-weight: bold;color: #4c3725;">価格帯</span>
+                    </div>
+                    <div class="col">
+                        <span>{{ shop.price }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- お気に入りボタン -->
+            <div class="mt-4 mb-3" id="favorite">
+                {% if favorites == 0 %}
+                <form action="{% url 'favorites_toggle02' pk=shop.pk %}" method="post" class="text-center">
+                    <input type="hidden" name="_token" value="tjB5W1PEOhN7XNpbP52F7OIXJsWGo2woB3SLVgaz">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger shadow-sm w-50">♥ お気に入り登録</button>                       
+                </form>
+                    {% else %}
+                <form action="{% url 'favorites_toggle02' pk=shop.pk %}" method="post" class="text-center">
+                    <input type="hidden" name="_token" value="tjB5W1PEOhN7XNpbP52F7OIXJsWGo2woB3SLVgaz">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-danger shadow-sm w-50">♥ お気に入り解除</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-10">
+
+            <!-- 予約ボタン -->
+            <div class="mb-5">
+                <div class="text-center ">
+                    <a href="{% url 'reserve' pk=shop.pk %}" class="btn shadow-sm w-100" style="background-color: #A9894B;color: #fff;">
+                        予約する
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}

@@ -1,0 +1,377 @@
+:root{
+    --cl-brown: #4C3725;
+    --cl-red: #BE1C2B;
+    --cl-gray: #727171;
+    --cl-light-gray: #E6E5E4;
+    --cl-orange: #E8854A;
+    --cl-gold:#A9894B;
+    --cl-beige:#E7E0D0;
+}
+
+/* ====================================
+    mv
+==================================== */
+.swiper {
+  width: 100%;
+  height: 75vh; 
+}
+
+.swiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;  
+    background-color: rgba(180, 180, 180, 0.326);
+    z-index: 10;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end; 
+}
+
+.overlay-text {      
+  padding: 3vh 3vw;
+}
+
+.mv-content h1 {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 6.5vw;
+    font-weight: 650;
+    color: #ffffff;
+    margin-bottom: 32px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+    line-height: 1.2;
+    letter-spacing: 0.2rem;
+}
+
+.mv-content p {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 24px;
+    color: #f0f0f0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+
+/* ====================================
+    search
+==================================== */
+
+.search{
+    padding: 30px 0 20px;
+    width: 80%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius:5px;
+}
+
+.search_ttl{
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 2.5rem;
+    color: var(--cl-brown);
+    font-weight: 400;
+    letter-spacing: 0.2rem;
+    margin-bottom: 0;
+}
+
+.search_ttl::after{
+  content: " ";
+  
+}
+
+.search_ttl img{
+    width: 50px;
+    height: auto;
+    margin-right: 8px;
+    letter-spacing: 0.1rem;
+}
+
+.search_subttl{
+    padding-left: 20px;
+    color: var(--cl-brown);
+    font-size: 0.85rem;
+    font-weight: 550;
+    vertical-align: middle;
+    margin-bottom: 1rem;
+}
+
+.user-search-box {
+    width: 70%;
+    max-width: 600px;
+    height: 60px;
+}
+
+.search_btn{
+    background: var(--cl-gold);
+    color: #fff;
+}
+
+/* ====================================
+    item
+==================================== */
+
+.card{
+    border-radius: 5px;
+}
+
+.vertical-card-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.card-img-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;  
+  background-color: rgba(180, 180, 180, 0.326);
+  z-index: 10;
+  border-radius: 5px;
+}
+
+.card-link {
+  transition: 0.3s;
+}
+
+.card-link:hover {
+  opacity: 0.7;
+}
+
+.card-title {
+    color: #fff;
+    text-shadow: 0.25rem 0.25rem 1rem rgb(0 0 0 / 60%);
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.popular .card-title{
+  color: #000;
+  font-size: 16px;
+  text-shadow: none;
+  font-weight: 500;
+}
+
+.item_btn {
+    color: var(--cl-brown); 
+    background-color: #FFFFFF;
+    border: 1px solid var(--cl-brown);
+    border-radius: 0.25rem; 
+    padding: 0.2rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    margin-bottom: 4px;
+}
+
+.item_link a:hover,
+.item_link a:focus,
+.item_link a:active ,
+.item_btn:hover,
+.item_btn:focus,
+.item_btn:active {
+    background-color: var(--cl-brown) !important;; 
+    color: #FFFFFF; 
+    border-color: var(--cl-brown) !important;; 
+    cursor: pointer;
+    opacity: 1;
+}
+
+.item_bgbr {
+    color: #fff; 
+    background-color: var(--cl-brown);
+    border-radius: 0.25rem; 
+    padding: 0.2rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+.star-rating {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  white-space: nowrap;
+  color: #CCCCCC;
+}
+.star-rating#text{
+  color: #000;
+}
+.star-rating:before {
+  content: '★★★★★';
+}
+
+.star-rating:after {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  content: '★★★★★';
+  color: #F29F05;  
+  width: 0%;
+}
+
+.star-rating[data-rate^="5"]:after,
+.star-rating[data-rate="5.0"]:after {
+  width: 100%;
+}
+.star-rating[data-rate="4.5"]:after {
+  width: 90%;
+}
+.star-rating[data-rate^="4"]:after,
+.star-rating[data-rate="4.0"]:after {
+  width: 80%;
+}
+.star-rating[data-rate="3.5"]:after {
+  width: 70%;
+}
+.star-rating[data-rate^="3"]:after,
+.star-rating[data-rate="3.0"]:after {
+  width: 60%;
+}
+.star-rating[data-rate="2.5"]:after {
+  width: 50%;
+}
+.star-rating[data-rate^="2"]:after,
+.star-rating[data-rate="2.0"]:after {
+  width: 39%;
+}
+.star-rating[data-rate="1.5"]:after {
+  width: 30%;
+}
+.star-rating[data-rate^="1"]:after,
+.star-rating[data-rate="1.0"]:after {
+  width: 20%;
+}
+.star-rating[data-rate="0.5"]:after {
+  width: 10%;
+}
+.star-rating[data-rate^="0"]:after,
+.star-rating[data-rate="0.0"]:after {
+  width: 0%;
+}
+
+.category .row .col,
+.tag .row .col,
+.popular .row .col {
+  margin-bottom: 0.5rem;
+}
+
+/* @mediaクエリ内の定義 */
+@media screen and (min-width: 1400px) {
+  .nagoyameshi-container {
+    max-width: 1200px;
+  }
+}
+
+/* responsive -------------------------------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    .swiper {
+        height: 450px;
+    }
+
+    .mv-content h1 {
+        font-size: 54px;
+    }
+
+    .mv-content p {
+        font-size: 16px;
+    }
+}
+
+
+/* ====================================
+    review
+==================================== */
+
+
+/* 選択された星とその前の星を金色にする */
+.star-rating-create input:checked ~ label,
+.star-rating-create label:hover,
+.star-rating-create label:hover ~ label {
+ color: gold; 
+}
+
+/* 星評価のコンテナ */
+
+#id_stars {
+  display: flex; 
+  justify-content: center;
+}
+
+/* .star-rating-create{
+  display: flex;
+  justify-content: center;
+  align-items: center;;
+} */
+
+.star-rating-create label {
+  color: #ccc;
+  padding: 0 0.7em;
+  width: 1rem; 
+  font-size: 3.0rem;
+  position: relative;
+  cursor: pointer; 
+}
+@media (max-width: 768px) {
+  .star-rating-create label {
+    padding: 0 0.7em;
+    width: 1rem; 
+    font-size: 1.85rem;
+  }
+}
+
+
+.star-rating-create input {
+  /* input自体は非表示にする */
+  display: none;
+}
+
+
+/* 選択された星とその前の星を金色にする */
+#id_stars div:has(input:checked) label {
+  color: gold; 
+}
+#id_stars:hover div label {
+  color: gold; 
+}
+#id_stars div:hover ~ div label {
+  color: #ccc; 
+}
+#id_stars div:has(input:checked) ~ div label {
+  color: #ccc; 
+}
+#id_stars div:has(input) label {
+  color: gold; 
+}
+
+/* 必須入力のマーク */
+.required-tag {
+  background-color: #dc3545;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+}
+
+
+
+/* ====================================
+    rserve
+==================================== */
+
+.form-control:disabled, .form-control[readonly] {
+  background-color: #fff;
+  color: #495057;
+}
+

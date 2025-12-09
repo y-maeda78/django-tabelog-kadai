@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}予約{% endblock %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'restaurants_list' %}">店舗一覧</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'restaurants_detail' pk=shop.pk %}">店舗詳細</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">予約入力フォーム</li>
+                </ol>
+</nav>
+<div class="container pb-5">  
+
+        <h1 class="mt-5 mb-2 text-center">{{ shop.name }}</h1>
+        <p class="text-center mb-2">
+            <span class="star-rating" data-rate="{{ average_rating|floatformat:1 }}"></span>
+            {{ average_rating|floatformat:1 }}（{{ review_count }}件）
+        </p>
+
+    <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link border" href="{% url 'restaurants_detail' pk=shop.pk %}">店舗情報</a>
+        </li>
+        <li class="nav-item " role="presentation">
+            <a class="nav-link border" href="{% url 'reviews' pk=shop.pk %}">レビュー</a>
+        </li>
+    </ul>
+
+    <div class="tab-content border border-top-0 p-4 mb-4" id="detailTabsContent">
+
+        <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+            <div class="mx-auto" style="width: 98%; margin: 10px auto;">
+                <p>予約情報を入力してください。</p>
+
+                <form action="{% url 'reserve' pk=shop.pk %}" method="post" class="mt-4">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- 予約日 -->
+                    <div class="row align-items-center justify-content-center form-row-custom mb-2">
+                        <div class="col-md-3">
+                            <label for="{{ form.reserved_date.id_for_label }}" class="col-form-label fw-bold">
+                                予約日<span class="required-tag">必須</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.reserved_date }} {% for error in form.reserved_date.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- 時間 -->
+                    <div class="row align-items-center justify-content-center form-row-custom mb-2">
+                        <div class="col-md-3">
+                            <label for="{{ form.reserved_time.id_for_label }}" class="col-form-label fw-bold">
+                                時間<span class="required-tag">必須</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.reserved_time }} {% for error in form.reserved_time.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- 人数 -->
+                    <div class="row align-items-center justify-content-center form-row-custom mb-2">
+                        <div class="col-md-3">
+                            <label for="{{ form.number_of_people.id_for_label }}" class="col-form-label fw-bold">
+                                人数<span class="required-tag">必須</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.number_of_people }} {% for error in form.number_of_people.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- 予約ボタン -->
+                    <div class="text-center mt-5 mb-3">
+                        <button type="submit" class="btn btn-custom-brown-dark shadow-lg" style="max-width: 300px;background-color: #A9894B;color: #fff;">
+                            予約を確定する
+                        </button>
+                    </div>
+                </form>
+ 
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    
+const dateInput = document.querySelector("#id_reserved_date");
+    flatpickr("#id_reserved_date", {
+        locale: "ja",
+        minDate: "today", 
+        dateFormat: "Y-m-d",
+    });
+
+    if (dateInput) {
+        dateInput.style.visibility = 'visible';
+        dateInput.style.opacity = '1';
+    }
+
+</script>
+{% endblock %}

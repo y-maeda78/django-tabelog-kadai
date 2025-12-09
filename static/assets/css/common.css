@@ -1,0 +1,259 @@
+:root{
+    --cl-brown: #4C3725;
+    --cl-red: #BE1C2B;
+    --cl-gray: #727171;
+    --cl-light-gray: #E6E5E4;
+    --cl-orange: #E8854A;
+    --cl-gold:#A9894B;
+    --cl-beige:#E7E0D0;
+}
+
+/* bg color */
+.bglg{ background: var(--cl-light-gray); }
+.bggd{ background: var(--cl-gold);}
+.bgbge{background: var(--cl-beige);}
+
+/* fon tcolor */
+.fcbr{ color: var(--cl-brown);}
+.fcog{ color: var(--cl-orange); }
+
+/* ====================================
+    リセットCSS
+==================================== */
+
+/* Box Sizing の適用 */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* リストの装飾を消す */
+ul, ol {
+  list-style: none;
+}
+
+/* ====================================
+    共通スタイル
+==================================== */
+
+/* フォントと基本スタイルの設定 */
+body,p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #202020;
+}
+
+/* 画像のレスポンシブ設定 */
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+/* コンテナ（共通の幅制限） */
+.sec{
+    width: 100%;
+    margin: 60px auto;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.wrap{
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section h2{
+    color: var(--cl-brown);
+    letter-spacing: 0.2rem;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* ====================================
+    リンク（aタグ）の設定
+==================================== */
+
+a {
+  text-decoration: none !important; /* 下線を消す（強力に適用） */
+  color: inherit; /* 親要素の色を継承 */
+  -webkit-tap-highlight-color: transparent; /* スマホタップ時のハイライト削除 */
+  transition: opacity 0.3s ease; /* ホバー時のふわっとした動き */
+}
+
+/* 訪問済みリンクの色変化をなくす */
+a:visited {
+  color: none;
+}
+
+/* ホバー時・フォーカス時のスタイル */
+a:hover,
+a:focus {
+  opacity: 0.6;
+}
+
+/* ====================================
+    header
+==================================== */
+
+#header{
+    color: #f8f9fa;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+}
+
+.logo h1{
+    margin-left: 8px;
+    line-height:0;
+    font-family: "Rowdies", sans-serif;
+    color: var(--cl-brown);
+    font-weight: 900;
+    font-size: 2rem;
+    padding-top: 1%;
+}
+
+.logo_img{
+    width: 54px;
+    height: auto;
+}
+
+.navbar-nav.ms-auto {
+    margin-left: auto !important;
+}
+
+
+/* ====================================
+    footer
+==================================== */
+.footer{
+    background: var(--cl-brown);
+}
+
+.footer_container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px 40px;
+}
+
+.footer_ttl a{
+    font-family: "Rowdies", sans-serif;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.footer_link {
+    display: flex;
+}
+
+.footer_link a {
+    margin: 0 15px;
+    white-space: nowrap;
+    font-size: 0.98rem;
+    color: var(--cl-light-gray);
+}
+
+.copy p{
+    color: #b2b2b2;
+    font-size: 0.7rem;
+    padding: 8px 0 0 0;
+    text-align: center;
+}
+
+
+@media (max-width: 768px) {
+
+    .footer_ttl a{
+        font-size: 1.5rem;
+    }
+    
+    .footer_container {
+        padding: 20px 30px;
+    }
+    
+    .footer_link {
+        flex-direction: column;
+        margin-right: 10%;
+    }
+
+    .footer_link a {
+        margin: 5px 0; 
+        display: block;
+        font-size: 0.6rem;
+    }
+}
+
+
+
+/* responsive -------------------------------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+    
+    
+    .sp{
+        display: block;
+    }
+
+    .pc{
+        display: none;
+    }
+
+    .tb{
+        display: none;
+    }
+
+    .wrap{
+        width: 90%;
+    }
+
+}
+
+
+
+
+
+/* --------------------------------------------------------------------------------------------------- */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .tb{
+        display: block;
+    }
+
+    .pc{
+        display: none;
+    }
+
+    .sp{
+        display: none;
+    }
+
+    .wrap{
+        width: 80%;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1025px) {
+
+    .pc{
+        display: block;
+    }
+
+    .tb{
+        display: none;
+    }
+
+    .sp{
+        display: none;
+    }
+}

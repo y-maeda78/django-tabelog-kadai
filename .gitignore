@@ -1,0 +1,6 @@
+__pycache__/
+secrets/.env.dev
+secrets/.env.prod
+.env
+venv/
+*.pyc

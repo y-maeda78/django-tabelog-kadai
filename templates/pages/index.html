@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+    <div>
+        <div class="swiper">
+            <div class="swiper-wrapper">    
+                <div class="swiper-slide"><img src="https://nagoyameshi-pattern-1.herokuapp.com/images/main1.jpg"></div>
+                <div class="swiper-slide"><img src="https://nagoyameshi-pattern-1.herokuapp.com/images/main2.jpg"></div>
+                <div class="swiper-slide"><img src="https://nagoyameshi-pattern-1.herokuapp.com/images/main3.jpg"></div> 
+                <div class="d-flex overlay-background">
+                    <div class="container mv-content overlay-text">
+                        <h1>甘くて。<br>辛くて。<br><span class="fcog">茶</span>色いあの味。</h1>
+                        <p>
+                            愛知に来たら、食べてみりん。<br class="sp">名古屋のB級グルメ “ なごやめし ”
+                        </p> 
+                    </div>    
+                </div>      
+            </div>
+        </div>      
+    </div>
+
+<!-- search -->
+<div class="search bgbge">
+    <h2 class="search_ttl"><img src="{% static 'assets/images/img_icon01.png' %}" alt="">SEARCH</h2>
+    <span class="search_subttl">お店を探す</span>
+    <form method="GET" action="{% url 'restaurants_list' %}" class="user-search-box">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword"  value="{{ request.GET.keyword }}">
+            <button type="submit" class="btn search_btn shadow-sm">検索</button>
+        </div>
+    </form>
+</div>
+
+<!-- category -->
+<section class="category sec">
+    <div class="wrap">
+        <h2 class="text-center mb-1">カテゴリから探す</h2>
+        <hr class="mb-4 mx-auto" style="border-top: 3px dotted #bfb9aa;width: 70px;">
+        <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-1 mb-2">
+
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?category_id=101" class="card-link">
+                    <div class="card">
+                        <img src="{% static 'assets/images/category_hutumabushi.jpg' %}" class="card-img vertical-card-image" alt="ひつまぶし">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">ひつまぶし</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?category_id=102" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/category_kishimen.jpg' %}" class="card-img vertical-card-image" alt="きしめん">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">きしめん</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?category_id=103" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/category_ramen.jpg' %}" class="card-img vertical-card-image" alt="ラーメン">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">台湾ラーメン</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?category_id=104" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/category_misokatu.jpg' %}" class="card-img vertical-card-image" alt="味噌カツ">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">味噌カツ</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?category_id=105" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/category_teba.jpg' %}" class="card-img vertical-card-image" alt="手羽先">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">手羽先</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?category_id=106" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/category_morning.jpg' %}" class="card-img vertical-card-image" alt="モーニング">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">モーニング</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="item_link mb-5">
+        {% for category in categories %}
+            <!-- 表示したくないカテゴリーIDは指定する -->
+            {% if category.id != 101 and category.id != 102 and category.id != 103 and category.id != 104 and category.id != 105 and category.id != 106 %}
+            <a href="{% url 'restaurants_list' %}?category_id={{ category.id }}" class="btn item_btn">{{ category.name }}</a>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- tag -->
+<section class="tag sec">
+    <div class="wrap">
+        <h2 class="text-center mb-1">エリアから探す</h2>
+        <hr class="mb-4 mx-auto" style="border-top: 3px dotted #bfb9aa;width: 70px;">
+        <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-2 mb-2">
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?tag_id=1" class="card-link">
+                    <div class="card">
+                        <img src="{% static 'assets/images/area_nagoyastation.jpg' %}" class="card-img vertical-card-image">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title text-center">名古屋駅<br>周辺</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?tag_id=2" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/area_sakae.jpg' %}" class="card-img vertical-card-image">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">栄</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?tag_id=3" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/area_osu.jpg' %}" class="card-img vertical-card-image">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">大須・矢場町</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?tag_id=4" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/area_fushimi.jpg' %}" class="card-img vertical-card-image">
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">伏見・丸の内</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?tag_id=5" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/area_toyota.jpg' %}" class="card-img vertical-card-image" >
+                        <div class="card-img-overlay d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title">豊田</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'restaurants_list' %}?tag_id=6" class="card-link">
+                    <div class="card text-white">
+                        <img src="{% static 'assets/images/area_centrair.jpg' %}" class="card-img vertical-card-image">
+                        <div class="card-img-overlay text-align-center d-flex justify-content-center align-items-center overlay-background">
+                            <h3 class="card-title text-center">セントレア<br>空港</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="item_link mb-5">
+            {% for tag in tags %}
+                {% if forloop.counter > 6 %}            
+            <a href="{% url 'restaurants_list' %}?tag_id={{ tag.id }}" class="item_btn">{{ tag.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="popular sec">
+    <div class="wrap">
+
+        <h2 class="mb-1 text-center">新規掲載店舗</h2>
+        <hr class="mb-4 mx-auto" style="border-top: 3px dotted #bfb9aa;width: 70px;">
+        <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-3 mb-5">
+            {% for object in object_list %}
+            <div class="col">
+                {% include 'snippets/shop_box.html' %}
+            </div>
+            {% endfor %}
+
+            <!-- 後日実装予定 -->
+            <!-- 
+            {% for shop in good_shops %}
+            {% if shop.stars_average >= 4 %}
+            <div class="col">
+                {% include 'snippets/shop_box.html' %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            -->
+        </div>
+    </div>
+</section>
+
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}

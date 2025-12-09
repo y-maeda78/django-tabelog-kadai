@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'restaurants_list' %}">店舗一覧</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'restaurants_detail' pk=shop.pk %}">店舗詳細</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">レビュー</li>
+                </ol>
+</nav>
+<div class="container pb-5">  
+
+    <h1 class="mt-5 mb-2 text-center">{{ shop.name }}</h1>
+    <p class="text-center mb-2">
+        <span class="star-rating" data-rate="{{ average_rating|floatformat:1 }}"></span>
+        {{ average_rating|floatformat:1 }}（{{ review_count }}件）
+    </p>
+    
+    <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link border" href="{% url 'restaurants_detail' pk=shop.pk %}">店舗情報</a>
+        </li>
+        <li class="nav-item " role="presentation">
+            <a class="nav-link bg-light active" href="{% url 'reviews' pk=shop.pk %}">レビュー</a>
+        </li>
+    </ul>
+    
+
+    <div class="tab-content border border-top-0 p-4 mb-4" id="detailTabsContent">
+        <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+            <div class="" style="width: 100%; margin: 5px auto;">
+                <!-- レビュー投稿フォーム -->
+                <form action="{% url 'review_create' pk=shop.pk %}" method="post">
+                    {% csrf_token %}
+                    
+                    <!-- 評価（星）の入力フィールド -->
+                    <div class="card p-4 mb-4">
+                        <label for="score" class="form-label fw-bold d-flex align-items-center mb-1">
+                            評価
+                            <span class="required-tag">必須</span>                            
+                        </label>
+                        <p class="mb-0 pl-3 text-muted small text-center">5点満点で評価してください</p>
+
+                        <div class="text-center">
+                            <div class="star-rating-create" id="star-rating-create">
+                                {{ form.stars }}
+                            </div>
+
+                        </div>
+                        {% if form.stars.errors %}
+                        <div class="text-danger small mt-2">
+                            {{ form.stars.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- コメントの入力フィールド -->
+                    <div class="card p-4 mb-4 shadow-sm border">
+                        <label for="content" class="form-label fw-bold d-flex align-items-center mb-3">
+                            コメント
+                            <span class="required-tag">必須</span>
+                        </label>
+                        {{ form.comment }}
+
+                        {% if form.comment.errors %}
+                            <div class="text-danger small mt-2">{{ form.comment.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3 mt-5">
+                        <a href="{% url 'reviews' pk=shop.pk %}" class="btn btn-outline-secondary shadow-sm" style="width: 150px;margin-right: 1rem;">キャンセル</a>
+                        
+                        <button type="submit" class="btn shadow-sm" style="width: 150px; color: #fff; background-color: #A9894B;">
+                            投稿する
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+            
+</div>
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}

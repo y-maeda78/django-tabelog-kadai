@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb;">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+        <li class="breadcrumb-item active" aria-current="page">店舗一覧</li>
+    </ol>
+</nav>
+
+<div class="search bgbge">
+    <h2 class="search_ttl"><img src="../static/assets/images/img_icon01.png" alt="">SEARCH</h2>
+    <span class="search_subttl">お店を探す</span>
+    <form method="GET" action="{% url 'restaurants_list' %}" class="user-search-box">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword" value="{{ shop.GET.keyword }}">
+            <button type="submit" class="btn search_btn shadow-sm">検索</button>
+        </div>
+    </form>
+</div>
+
+<div class="container sec pb-5">
+
+    <div class="row justify-content-center">
+        <div class="col-xl-3 col-lg-4 col-md-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    カテゴリから探す
+                </div>
+                <div class="card-body">
+                    <form method="GET" action="{% url 'restaurants_list' %}" class="w-100">
+                        <div class="form-group mb-3">
+                            <select class="form-control form-select" name="category_id" required>
+                                <option value="" hidden>選択してください</option>
+                                {% for category in categories %}
+                                {% if category.id == category_id %}
+                                <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                                {% else %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn search_btn text-white shadow-sm w-100">検索</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    エリアから探す
+                </div>
+                <div class="card-body">
+                    <form method="GET" action="{% url 'restaurants_list' %}" class="w-100">
+                        <div class="form-group mb-3">
+                            <select class="form-control form-select" name="tag_id" required>
+                                <option value="" hidden>選択してください</option>
+                                
+                                {% for tag in tags %}
+                                {% if tag.id == tag_id %}
+                                <option value="{{ tag.id }}" selected>{{ tag.name }}</option>
+                                {% else %}
+                                <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn search_btn text-white shadow-sm w-100">検索</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex justify-content-between flex-wrap">
+                <p class="fs-5 mb-3">
+                    {{ shops|length }}件の店舗が見つかりました
+                </p>
+                
+            </div>
+
+            {% for shop in shops %}
+            <div class="mb-3">
+                <a href="{% url 'restaurants_detail' pk=shop.pk %}" class="link-dark card-link">
+                    <div class="card h-100">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ shop.image.url }}" class="card-img-top horizontal-card-image">                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title" style="color: #000;text-shadow: none;">{{ shop.name }}</h3>
+                                    <hr class="my-2">
+                                    <p class="mb-1">
+                                        <span class="star-rating me-1" data-rate="{{ shop.average_rating|floatformat:1 }}"></span>
+                                        {{ shop.average_rating|floatformat:1 }}（{{ shop.review_count }}件）
+                                    </p>
+
+                                    <p class="card-text">{{ shop.description|linebreaksbr }}</p>
+                                    <div class="flex mb-4">
+                                        <span class="item_bgbr  me-2">#{{ shop.category.name }}</span>
+                                        
+                                        {% for tag in shop.tags.all %}
+                                        <span class="item_bgbr  me-2">#{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+
+            <!-- ページネーション後日実装予定 -->
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}有料プランの退会{% endblock %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'mypage' %}">マイページ</a></li> 
+                    <li class="breadcrumb-item active" aria-current="page">有料会員の退会</li>
+                </ol>
+</nav>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6 col-md-8">
+            <h1 class="mb-3 text-center">有料プランの退会</h1>
+
+            <div class="text-center text-danger my-3">
+                有料プランを解約すると以下の特典を受けられなくなります。<br>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    有料プランの内容
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">・気になる店舗をお気に入り登録できる</li>
+                    <li class="list-group-item">・今すぐネット予約が可能！</li>
+                    <li class="list-group-item">・レビューの閲覧・投稿ができる</li>
+                    <li class="list-group-item">・月額たったの300円</li>
+                </ul>
+            </div>
+            <hr class="mb-4">
+
+            <div class="text-danger" id="stripe-error"></div>
+
+            <form action="{% url 'subscription_cancellation_save' %}" method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-danger text-white shadow-sm w-50" id="cancellation-button">退会する</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

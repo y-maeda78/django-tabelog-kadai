@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+        <li class="breadcrumb-item active" aria-current="page">マイページ</li>
+    </ol>
+</nav>
+
+<div class="container nagoyameshi-container pb-5">
+    <div class="row justify-content-center">
+
+        <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-10">
+            <h1 class="mb-4 text-center">マイページ</h1>
+
+            <!-- マイページメニュー  -->
+            <div class="card shadow-sm">
+                <div class="list-group list-group-flush">                    
+                    <!-- 1. 会員情報の変更 -->
+                    <a href="{% url 'account_detail' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        会員情報の確認・変更
+                        <span class="text-muted">></span>
+                    </a>
+                    {% if user.is_paymentstatus and not is_reviewed %}
+                    <!-- 2. 支払い情報の変更 -->
+                    <a href="{% url 'subscription_update' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        支払い情報の変更
+                        <span class="text-muted">></span>
+                    </a>
+                    
+                    <!-- 3. お気に入り一覧 -->
+                    <a href="{% url 'favorites' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        お気に入り一覧
+                        <span class="text-muted">></span>
+                    </a>
+                    
+                    <!-- 4. 予約一覧 -->
+                    <a href="{% url 'reserve_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        予約一覧
+                        <span class="text-muted">></span>
+                    </a>
+                    {% endif %}
+
+                    <!-- 無料会員の場合 -->
+                    <!-- 5. 有料会員の登録 -->
+                    {% if not user.is_paymentstatus %}                    
+                    <a href="{% url 'subscription' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        有料プランの登録
+                        <span class="text-muted">></span>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- 5. 有料会員を退会する (目立つボタンで表現) -->
+                <div class="card-body border-top">
+                    {% if user.is_paymentstatus and not is_reviewed %}
+                    <a href="{% url 'subscription_cancellation' %}" class="btn btn-outline-danger w-100 mb-3 shadow-sm">
+                        有料会員を退会する
+                    </a>
+                    {% endif %}
+
+                    <a href="{% url 'logout' %}" class="btn btn-outline-secondary w-100 shadow-sm">
+                        ログアウト
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}

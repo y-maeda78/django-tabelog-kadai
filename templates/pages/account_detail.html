@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb;">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'mypage' %}">マイページ</a></li> 
+        <li class="breadcrumb-item active" aria-current="page">会員情報確認</li>
+    </ol>
+</nav>
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-10">
+
+            <h1 class="mb-4 text-center">会員情報確認</h1>
+            <div class="d-flex justify-content-end align-items-end">
+                <div>
+                    <a href="{% url 'account_edit' %}" class="btn shadow-sm" style="background-color: #A9894B;color: #fff;">編集</a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-4 border shadow-sm rounded">                
+                <div class="row mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="col-md-4 col-form-label text-md-end fw-bold">氏名</label>
+                    <div class="col-md-6">
+                        {{ form.username }}
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="col-md-4 col-form-label text-md-end fw-bold">メールアドレス</label>
+                    <div class="col-md-6">
+                        {{ form.email }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.zipcode.id_for_label }}" class="col-md-4 col-form-label text-md-end fw-bold">郵便番号</label>
+                    <div class="col-md-6">
+                        {{ form.zipcode }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-md-4 col-form-label text-md-end fw-bold">住所</label>
+                    <div class="col-md-6">
+                        <span class="me-1 small">都道府県</span>
+                        {{ form.prefecture }}
+                        <span class="me-1 small">市区町村</span>
+                        {{ form.city }}
+                        <span class="me-1 small">丁目・番地・号</span>
+                        {{ form.address1 }}
+                        <span class="me-1 small">建物名/会社名・部屋番号</span>
+                        {{ form.address2 }}
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <label for="{{ form.tel.id_for_label }}" class="col-md-4 col-form-label text-md-end fw-bold">電話番号</label>
+                    <div class="col-md-6">
+                        {{ form.tel }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ TITLE }} | 新規登録
+{% endblock %}
+
+{% block main %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">新規登録</h2>
+            
+            <hr class="my-4">
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group row mb-3">
+                    <label for="username" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">氏名</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="username" name="username" value="" required
+                            autocomplete="username" autofocus placeholder="侍 太郎">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-4">
+                    <label for="tel" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">電話番号</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input type="tel" class="form-control" id="tel" name="tel" value="" required
+                            autocomplete="tel-national" minlength="10" maxlength="11" placeholder="09012345678">
+                        <span style="font-size: small;">※ハイフンなしで入力</span>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="form-group row mb-3">
+                    <label for="zipcode" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">郵便番号</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" value="" required
+                            pattern="[0-9]{7}" title="郵便番号は7桁の半角数字で入力してください。" maxlength="7" autocomplete="postal-code"
+                            placeholder="1010022">
+                        <span style="font-size: small;">※ハイフンなしで入力</span>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label for="prefecture" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">都道府県</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input class="form-control" type="text" id="prefecture" name="prefecture" placeholder="愛知県" value="">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label for="city" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">市区町村</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input class="form-control" type="text" id="city" name="city" placeholder="名古屋市中区" value="">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label for="address1" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">丁目・番地・号</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="address1" name="address1" value="" required
+                            placeholder="1丁目300番地">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label for="address2" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">建物名/会社名・部屋番号</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" id="address2" name="address2" value=""
+                            placeholder="○○マンション 101号室">
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="form-group row mb-3">
+                    <label for="email" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">メールアドレス</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input type="email" class="form-control" id="email" name="email" value="" required
+                            autocomplete="email" placeholder="samurai@example.com">
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label for="password1" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">パスワード</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input id="password1" type="password" class="form-control" name="password1" required
+                            autocomplete="new-password">
+                        {% for error in form.password1.errors %}
+                            <p class="text-danger small">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label for="password1" class="col-md-5 col-form-label text-md-left fw-bold">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">パスワード（確認用）</span>
+                        </div>
+                    </label>
+
+                    <div class="col-md-7">
+                        <input id="password2" type="password" class="form-control" name="password2"
+                            required autocomplete="new-password">
+                        {% for error in form.password2.errors %}
+                            <p class="text-danger small">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <hr class="my-4">
+
+                <div class="form-group d-flex justify-content-center mt-3 mb-4">
+                    <button type="submit" class="btn text-white shadow-sm w-50" style="background-color: #A9894B;color: #fff;">登録</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

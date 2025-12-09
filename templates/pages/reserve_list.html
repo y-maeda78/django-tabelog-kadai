@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% block title %}予約一覧{% endblock %}
+{% block main %}
+
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'mypage' %}">マイページ</a></li> 
+        <li class="breadcrumb-item active" aria-current="page">予約一覧</li>
+    </ol>
+</nav>
+<div class="container pb-5">  
+    <div class="row justify-content-center">
+
+        <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-10">
+            <h1 class="mb-4 text-center">予約一覧</h1>
+            
+            {% if reservations %}
+                <ul class="list-group">
+                    {% for reservation in reservations %}
+                    <li class="list-group-item mb-3 p-3 shadow-sm border">                      
+                        <div class="flex-grow-1 ">
+                            <div class="d-flex justify-content-between align-items-center ">
+                                <a href="{% url 'restaurants_detail' pk=reservation.shop.pk %}" class="text-decoration-none">
+                                    <h4 class="card-title-custom" style="font-weight: bold;color: #A9894B;">{{ reservation.shop.name }}</h4>
+                                </a>
+                                {% if today < reservation.reserved_date %}
+                                    <div class="ms-3 btn btn-sm btn-outline-danger">
+                                        <a href="{% url 'reserve_delete' pk=reservation.pk %}">キャンセルする</a>
+                                    </div>
+                                {% else %}
+                                    <div class="ms-3 btn btn-sm btn-secondary disabled">
+                                        来店済み
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-2" >
+                            <p class="mb-0 text-muted small"><span style="font-size: 0.65rem;">予約番号</span> #{{ reservation.id }} </p>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6" style="font-size: small;">
+                                <p class="mb-0 text-muted small">予約日</p>
+                                <p class="mb-0" style="font-weight: bold;">{{ reservation.reserved_date}} {{ reservation.reserved_time}}</p>
+                            </div>
+                            <div class="" style="font-size: small;">
+                                <p class="mb-0 text-muted small">人数</p>
+                                <p class="fw-bold mb-0" style="font-weight: bold;">{{ reservation.number_of_people }}名</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                {% else %}
+                <div class="alert alert-secondary text-center mt-5" role="alert">
+                    現在、確定されたご予約はありません。
+                </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

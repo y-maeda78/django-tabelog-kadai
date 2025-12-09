@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}管理画面{% endblock %}
+
+{% block main %}
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb;">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+        <li class="breadcrumb-item active" aria-current="page">管理画面</li>
+    </ol>
+</nav>
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="container-fluid">
+            <h1 class="h3 text-gray-800">管理画面（売上集計）</h1>
+
+            {% if user.is_admin %}
+                <ul class="navbar-nav ms-auto mb-4">
+                    
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            その他メニュー
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">管理画面トップ</a>
+                            <a class="dropdown-item" href="{% url 'admin:base_user_changelist' %}" target="_blank">会員一覧</a>
+                            <a class="dropdown-item" href="{% url 'admin:base_shop_changelist' %}" target="_blank">店舗一覧</a>
+                            <a class="dropdown-item" href="{% url 'admin:base_category_changelist' %}" target="_blank">カテゴリ一覧</a>
+                            <a class="dropdown-item" href="{% url 'admin:base_tag_changelist' %}" target="_blank">カテゴリ一覧</a>
+                            <a class="dropdown-item" href="{% url 'admin_summary' %}">売上集計</a>
+                        </div>
+                    </li>
+                                    
+                </ul>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        総会員数 (ユーザー数)
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_users }} 名</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        有料会員数
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_subscriptionusers }} 名</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        累計売上 (新規登録時)
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">¥{{ total_revenue|intcomma }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">月別有料会員登録者数</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>月</th>
+                                    <th>新規登録者数 (件)</th>
+                                    <th>新規売上 (¥)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in sales_data %}
+                                <tr>
+                                    <td>{{ item.month }}</td>
+                                    <td>{{ item.new_subscriptions }}</td>
+                                    <td>¥{{ item.monthly_revenue|intcomma }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3">データがありません。</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

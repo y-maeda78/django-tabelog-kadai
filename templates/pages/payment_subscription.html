@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}有料プランの登録{% endblock %}
+
+{% block main %}
+
+<!-- ↓↓ main ↓↓ -->
+<nav class="mb-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">HOME</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'mypage' %}">マイページ</a></li> 
+                    <li class="breadcrumb-item active" aria-current="page">有料会員の登録</li>
+                </ol>
+</nav>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6 col-md-8">
+            <h1 class="mb-3 text-center">有料プランの登録</h1>
+
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    有料プランの内容
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">・気になる店舗をお気に入り登録できる</li>
+                    <li class="list-group-item">・今すぐネット予約が可能！</li>
+                    <li class="list-group-item">・レビューの閲覧・投稿ができる</li>
+                    <li class="list-group-item">・月額たったの300円</li>
+                </ul>
+            </div>
+            <hr class="mb-4">
+
+            <div class="text-danger" id="stripe-error"></div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary text-white shadow-sm w-50" id="checkout-button">支払い方法の登録へ進む</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ↑↑ main ↑↑ -->
+
+{% endblock %}
+{% block extra_js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const checkoutButton = document.getElementById('checkout-button');
+    const cardError = document.getElementById('stripe-error');
+
+    // 1. Stripeの公開鍵をDjangoビューから取得
+    fetch("{% url 'stripe_config' %}")
+    .then((result) => result.json())
+    .then((data) => {
+        // 取得した公開鍵でStripeを初期化
+        const stripe = Stripe(data.publicKey);
+
+        if (checkoutButton) {
+            checkoutButton.addEventListener("click", () => {
+                // ボタンを押した際の処理
+                checkoutButton.disabled = true;
+                checkoutButton.textContent = '処理中...';
+                cardError.style.display = 'none';
+                
+                fetch("{% url 'create_checkout_session' %}")
+                    .then((result) => { return result.json(); })
+                    .then((data) => {
+                        console.log(data);
+                        
+                        // エラーが発生した際の処理
+                        if (data.error) {
+                            throw new Error(data.error);
+                        }
+                        return stripe.redirectToCheckout({ sessionId: data.sessionId });
+                    })
+                    .then((res) => {
+                        // 処理が成功した場合、通常この .then は実行されない
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        // エラーが発生したらボタンを元に戻し、メッセージを表示
+                        checkoutButton.disabled = false; // ボタンを再有効化
+                        checkoutButton.textContent = '支払い方法の登録へ進む'; // テキストを元に戻す
+
+                        const message = 'Stripeへのアクセスに失敗しました。詳細: ' + (error.message || '不明なエラー');
+                        document.getElementById('stripe-error').innerHTML = message;
+                        document.getElementById('stripe-error').style.display = 'block'; // エラー表示
+                        console.error(message, error);
+                    });
+            });
+   
+        }
+    })
+    // Error handling(公開キー取得エラー時)
+    .catch(error => {
+        const message = 'Stripeへのアクセスに失敗しました。';
+        document.getElementById('stripe-error').innerHTML = message;
+        document.getElementById('stripe-error').style.display = 'block';
+        console.error(message, error);
+    });
+});
+
+</script>
+{% endblock %}
