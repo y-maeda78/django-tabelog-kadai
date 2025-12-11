@@ -39,10 +39,10 @@
 
 .mv-content h1 {
     font-family: "Noto Sans JP", sans-serif;
-    font-size: 6.5vw;
+    font-size: 5.5vw;
     font-weight: 650;
     color: #ffffff;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
     line-height: 1.2;
     letter-spacing: 0.2rem;
@@ -50,7 +50,7 @@
 
 .mv-content p {
     font-family: "Noto Sans JP", sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     color: #f0f0f0;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     font-weight: 500;

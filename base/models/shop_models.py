@@ -20,7 +20,6 @@ def upload_image_to(instance, filename):
 カテゴリー
 """
 class Category(models.Model):
-    # id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=32, verbose_name='カテゴリー名')
     slug = models.CharField(max_length=32, unique=True, verbose_name='スラッグ') 
     def __str__(self):
@@ -36,7 +35,6 @@ class Category(models.Model):
 タグ
 """
 class Tag(models.Model):
-    # id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=32, verbose_name='タグ名')
     slug = models.CharField(max_length=32, unique=True, verbose_name='スラッグ') 
     def __str__(self):
@@ -67,7 +65,7 @@ class IrregularHoliday(models.Model):
 """
 店舗情報
 """
-class Shop(models.Model):   # Modelは、jangoのクラスで継承している
+class Shop(models.Model):
     WEEKDAY_CHOICES = (
         ('mon', '月'),
         ('tue', '火'),
@@ -77,7 +75,6 @@ class Shop(models.Model):   # Modelは、jangoのクラスで継承している
         ('sat', '土'),
         ('sun', '日'),
     )
-    # id = models.CharField(default=create_id, primary_key=True, max_length=50, editable=False)
     name = models.CharField(max_length=50, verbose_name='店名')
     mail = models.CharField(default='', blank=True, max_length=255, verbose_name='メールアドレス')
     zipcode = models.CharField(default='', blank=True, max_length=8, verbose_name='郵便番号')
@@ -94,7 +91,6 @@ class Shop(models.Model):   # Modelは、jangoのクラスで継承している
 
     # 画像
     image = models.ImageField(default='noImage.png', blank=True, upload_to=upload_image_to,  verbose_name='画像')
-    # image = models.ImageField(default='noImage.png', blank=True,  verbose_name='画像')
 
 
     # カテゴリー # ForeignKeyとon_delete=はセットで必須

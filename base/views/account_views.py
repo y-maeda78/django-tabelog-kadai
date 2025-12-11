@@ -20,47 +20,6 @@ class SignUpView(SuccessMessageMixin, CreateView):
     template_name = 'pages/signup.html'
     success_message = '新規登録が完了しました。続けてログインしてください。'
 
-# フォームの処理を削除
-"""
-    # 追加：フォームの処理
-    def post(self, request, *args, **kwargs):
-        user_form = CustomUserCreationForm(request.POST)
-        profile_form = ProfileForm(request.POST)
-        
-        if user_form.is_valid() and profile_form.is_valid():
-            return self.forms_valid(user_form, profile_form)
-        else:
-            print("User Form Errors:", user_form.errors)
-            print("Profile Form Errors:", profile_form.errors)
-            return self.forms_invalid(user_form, profile_form)
-    
-    # 追加
-    @transaction.atomic
-    # 新規登録が有効だった場合
-    def forms_valid(self, user_form, profile_form):
-        # Userモデルを保存
-        self.object = user_form.save()
-        
-        # Profileモデルを保存
-        profile = profile_form.save(commit=False)
-        profile.user = self.object # ユーザーとProfileを紐づけ
-        profile.save()
-
-        messages.success(self.request, '新規登録が完了しました。続けてログインしてください。')
-        return super().form_valid(user_form, profile_form)
-
-    # # 新規登録が有効だった場合
-    # def form_valid(self, form):
-    #     messages.success(self.request, '新規登録が完了しました。続けてログインしてください。')
-    #     return super().form_valid(form)
-    
-    # 追加：エラーの場合（両方のフォームをコンテキストに戻す）
-    def forms_invalid(self, user_form, profile_form):  
-        messages.error(self.request, user_form.errors)
-        messages.error(self.request, profile_form.errors)
-        return self.render_to_response(self.get_context_data(user_form=user_form, profile_form=profile_form))
-"""
-
 # ログイン
 class Login(LoginView):
     template_name = 'pages/login.html'
@@ -91,12 +50,6 @@ class AccountUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_object(self):
         # ログイン中のユーザーオブジェクトを返す
         return self.request.user
-"""
-    def get_object(self):
-        # URL変数ではなく、現在のユーザーから直接pkを取得
-        self.kwargs['pk'] = self.request.user.pk
-        return super().get_object()
-"""
 
 
 # マイページビュー
@@ -108,7 +61,7 @@ class MyPageView(LoginRequiredMixin, TemplateView):
 class AccountDetailView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = UserUpdateForm
-    template_name = 'pages/account_detail.html' # 修正後の会員情報確認テンプレート名
+    template_name = 'pages/account_detail.html'
     
     # フォームを読み取り専用にする
     def get_form(self, form_class=None):

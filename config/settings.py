@@ -138,7 +138,7 @@ TIME_ZONE = 'Asia/Tokyo'    # 変更
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

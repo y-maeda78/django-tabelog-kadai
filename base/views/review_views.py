@@ -58,10 +58,12 @@ class ShopReviewCreateView(LoginRequiredMixin, PaymentstatusRequiredMixin, Creat
     # URLから店舗情報を受け取るための準備
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['shop'] = get_object_or_404(Shop, pk=self.kwargs.get('pk'))
+        shop_pk = self.kwargs.get('pk') 
+        shop = get_object_or_404(Shop, pk=shop_pk)
+        context['shop'] = shop
 
         # 平均値計算ロジック
-        review_stats = self.object.reviews.all().aggregate(
+        review_stats = shop.reviews.all().aggregate(
             average_rating=Avg('stars'), 
             review_count=Count('id') 
         )

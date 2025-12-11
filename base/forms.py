@@ -18,6 +18,12 @@ class CustomUserCreationForm(BaseUserCreationForm):
         fields = (
             "username",
             "email",
+            "tel",
+            "zipcode",
+            "prefecture",
+            "city",
+            "address1",
+            "address2",
         )
  
 # ユーザー情報更新用フォーム

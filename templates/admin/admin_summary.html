@@ -73,44 +73,12 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        累計売上 (新規登録時)
+                                        累計売上
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">¥{{ total_revenue|intcomma }}</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">月別有料会員登録者数</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>月</th>
-                                    <th>新規登録者数 (件)</th>
-                                    <th>新規売上 (¥)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in sales_data %}
-                                <tr>
-                                    <td>{{ item.month }}</td>
-                                    <td>{{ item.new_subscriptions }}</td>
-                                    <td>¥{{ item.monthly_revenue|intcomma }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="3">データがありません。</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

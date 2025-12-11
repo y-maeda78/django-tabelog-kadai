@@ -41,15 +41,6 @@ class ReserveCreateView(LoginRequiredMixin, PaymentstatusRequiredMixin, CreateVi
 
         return context
     
-    """
-    # 予約前に有料会員のチェックを行う
-    def get(self, request, *args, **kwargs):
-        if self.request.user.profile.user_type == 'free':
-            messages.info(request, 'この機能を利用するには有料プランへの登録が必要です')
-            return redirect('subscription')
-        return super().get(request, *args, **kwargs)
-    """
-    
     # バリデーション成功後の保存処理
     def form_valid(self, form):
         form.instance.user = self.request.user
